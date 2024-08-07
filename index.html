@@ -76,14 +76,32 @@
         <!-- Додати новини та оголошення тут -->
 
         <div class="donate">
-            <h2>Підтримати нас</h2>
-            <p>Ви можете підтримати наш сервер, зробивши донат:</p>
-            <a href="https://send.monobank.ua/jar/AbnKs1v1mU" target="_blank">Донат через Monobank</a>
-            <p>Або переказавши кошти на картку: 4441 1144 3486 1462</p>
+            <h2>Поповнення балансу</h2>
+            <p>Ви можете поповнити баланс на сервері:</p>
+            <div id="donate-method">
+                <!-- Тут буде відображено метод поповнення -->
+            </div>
         </div>
     </main>
     <footer>
         <p>&copy; 2024 Credesasq Server. Всі права захищено.</p>
     </footer>
+    <script>
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                const country = data.country;
+                const donateDiv = document.getElementById('donate-method');
+
+                if (country === 'UA') {
+                    donateDiv.innerHTML = '<a href="https://send.monobank.ua/jar/AbnKs1v1mU" target="_blank">Поповнити через Monobank</a>';
+                } else {
+                    donateDiv.innerHTML = '<p>Переказати кошти на картку: 4441 1144 3486 1462</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching IP data:', error);
+            });
+    </script>
 </body>
 </html>
