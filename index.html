@@ -88,7 +88,12 @@
                 width: 100%;
             }
         }
+        .chart-container {
+            width: 80%;
+            margin: 20px auto;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
@@ -116,10 +121,14 @@
             </div>
             <form id="donate-form">
                 <input type="text" id="nickname" name="nickname" placeholder="Ваш нік" required>
-                <input type="number" id="amount" name="amount" placeholder="Сума поповнення (UAH)" required>
+                <input type="number" id="amount" name="amount" placeholder="Сума поповнення" required>
                 <input type="email" id="email" name="email" placeholder="Ваша електронна пошта" required>
                 <button type="submit">Відправити</button>
             </form>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
         </div>
     </main>
     <footer>
@@ -139,9 +148,11 @@
                 const donateDescription = document.getElementById('donate-description');
                 const homeLink = document.getElementById('home-link');
 
+                let currencySymbol;
                 switch (country) {
                     case 'UA':
-                        donateDiv.innerHTML = '<p>Поповнити через Monobank (1 UAH = 1$)</p>';
+                        currencySymbol = 'UAH';
+                        donateDiv.innerHTML = '<p>Поповнити через Monobank (1 UAH = 1cb)</p>';
                         countryInfo.textContent = 'Ми з України (UA)';
                         document.documentElement.lang = 'uk';
                         welcomeMessage.textContent = 'Ласкаво просимо до Credesasq Server';
@@ -151,7 +162,8 @@
                         homeLink.textContent = 'Головна';
                         break;
                     case 'RU':
-                        donateDiv.innerHTML = '<p>Переказати кошти на картку: 4441 1144 3486 1462 (1 UAH = 1$)</p>';
+                        currencySymbol = 'RUB';
+                        donateDiv.innerHTML = '<p>Переказати кошти на картку: 4441 1144 3486 1462 (1 RUB = 1cb)</p>';
                         countryInfo.textContent = 'Мы из России (RU)';
                         document.documentElement.lang = 'ru';
                         welcomeMessage.textContent = 'Добро пожаловать на Credesasq Server';
@@ -160,8 +172,20 @@
                         donateDescription.textContent = 'Вы можете пополнить баланс на сервере:';
                         homeLink.textContent = 'Главная';
                         break;
+                    case 'US':
+                        currencySymbol = 'USD';
+                        donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462 (1 USD = 1cb)</p>';
+                        countryInfo.textContent = 'We are from the United States (US)';
+                        document.documentElement.lang = 'en';
+                        welcomeMessage.textContent = 'Welcome to Credesasq Server';
+                        newsAnnouncement.textContent = 'Latest news and announcements.';
+                        donateTitle.textContent = 'Balance Replenishment';
+                        donateDescription.textContent = 'You can replenish the balance on the server:';
+                        homeLink.textContent = 'Home';
+                        break;
                     default:
-                        donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462 (1 UAH = 1$)</p>';
+                        currencySymbol = 'USD';
+                        donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462 (1 USD = 1cb)</p>';
                         countryInfo.textContent = 'We are from another country (EN)';
                         document.documentElement.lang = 'en';
                         welcomeMessage.textContent = 'Welcome to Credesasq Server';
@@ -171,6 +195,9 @@
                         homeLink.textContent = 'Home';
                         break;
                 }
+
+                // Оновити плейсхолдер для суми поповнення з урахуванням валюти
+                document.getElementById('amount').placeholder = `Сума поповнення (${currencySymbol})`;
             })
             .catch(error => {
                 console.error('Error fetching IP data:', error);
@@ -186,6 +213,43 @@
 
             const mailtoLink = `https://send.monobank.ua/jar/AbnKs1v1mU?amount=${amount}&nickname=${nickname}&email=${email}`;
             window.location.href = mailtoLink;
+        });
+
+        // Графік за допомогою Chart.js
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar', // або 'line', 'pie', 'doughnut' тощо
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     </script>
 </body>
