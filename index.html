@@ -20,10 +20,11 @@
         header nav ul {
             list-style: none;
             padding: 0;
-            text-align: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
         }
         header nav ul li {
-            display: inline;
             margin: 0 10px;
         }
         header nav ul li a {
@@ -69,6 +70,7 @@
             padding: 10px;
             width: 80%;
             max-width: 300px;
+            box-sizing: border-box;
         }
         .minecraft-info {
             margin: 20px 0;
@@ -76,6 +78,15 @@
             background-color: #007bff;
             color: white;
             border-radius: 5px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 600px) {
+            header nav ul {
+                flex-direction: column;
+            }
+            .donate form input, .donate form button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -113,7 +124,6 @@
     </main>
     <footer>
         <p id="country-info"></p>
-        <p>&copy; 2024 Credesasq Server. Всі права захищено.</p>
         <p>1 UAH = 1$</p>
     </footer>
     <script>
