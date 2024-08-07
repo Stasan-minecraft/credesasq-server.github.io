@@ -63,27 +63,25 @@
     <header>
         <nav>
             <ul>
-                <li><a href="index.html">Головна</a></li>
-                <li><a href="about.html">Про нас</a></li>
-                <li><a href="blog.html">Блог</a></li>
-                <li><a href="contact.html">Контакти</a></li>
+                <li><a href="index.html" id="home-link">Головна</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>Ласкаво просимо до Credesasq Server</h1>
-        <p>Останні новини та оголошення.</p>
+        <h1 id="welcome-message">Ласкаво просимо до Credesasq Server</h1>
+        <p id="news-announcement">Останні новини та оголошення.</p>
         <!-- Додати новини та оголошення тут -->
 
         <div class="donate">
-            <h2>Поповнення балансу</h2>
-            <p>Ви можете поповнити баланс на сервері:</p>
+            <h2 id="donate-title">Поповнення балансу</h2>
+            <p id="donate-description">Ви можете поповнити баланс на сервері:</p>
             <div id="donate-method">
                 <!-- Тут буде відображено метод поповнення -->
             </div>
         </div>
     </main>
     <footer>
+        <p id="country-info"></p>
         <p>&copy; 2024 Credesasq Server. Всі права захищено.</p>
     </footer>
     <script>
@@ -92,11 +90,40 @@
             .then(data => {
                 const country = data.country;
                 const donateDiv = document.getElementById('donate-method');
+                const countryInfo = document.getElementById('country-info');
+                const welcomeMessage = document.getElementById('welcome-message');
+                const newsAnnouncement = document.getElementById('news-announcement');
+                const donateTitle = document.getElementById('donate-title');
+                const donateDescription = document.getElementById('donate-description');
+                const homeLink = document.getElementById('home-link');
 
                 if (country === 'UA') {
                     donateDiv.innerHTML = '<a href="https://send.monobank.ua/jar/AbnKs1v1mU" target="_blank">Поповнити через Monobank</a>';
-                } else {
+                    countryInfo.textContent = 'Ми з України (UA)';
+                    document.documentElement.lang = 'uk';
+                    welcomeMessage.textContent = 'Ласкаво просимо до Credesasq Server';
+                    newsAnnouncement.textContent = 'Останні новини та оголошення.';
+                    donateTitle.textContent = 'Поповнення балансу';
+                    donateDescription.textContent = 'Ви можете поповнити баланс на сервері:';
+                    homeLink.textContent = 'Головна';
+                } else if (country === 'RU') {
                     donateDiv.innerHTML = '<p>Переказати кошти на картку: 4441 1144 3486 1462</p>';
+                    countryInfo.textContent = 'Мы из России (RU)';
+                    document.documentElement.lang = 'ru';
+                    welcomeMessage.textContent = 'Добро пожаловать на Credesasq Server';
+                    newsAnnouncement.textContent = 'Последние новости и объявления.';
+                    donateTitle.textContent = 'Пополнение баланса';
+                    donateDescription.textContent = 'Вы можете пополнить баланс на сервере:';
+                    homeLink.textContent = 'Главная';
+                } else {
+                    donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462</p>';
+                    countryInfo.textContent = 'We are from another country (EN)';
+                    document.documentElement.lang = 'en';
+                    welcomeMessage.textContent = 'Welcome to Credesasq Server';
+                    newsAnnouncement.textContent = 'Latest news and announcements.';
+                    donateTitle.textContent = 'Balance Replenishment';
+                    donateDescription.textContent = 'You can replenish the balance on the server:';
+                    homeLink.textContent = 'Home';
                 }
             })
             .catch(error => {
