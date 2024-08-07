@@ -47,15 +47,28 @@
         .donate {
             margin: 20px 0;
         }
-        .donate a {
+        .donate a, .donate button {
             background-color: #007bff;
             color: white;
             padding: 10px 20px;
             text-decoration: none;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
         }
-        .donate a:hover {
+        .donate a:hover, .donate button:hover {
             background-color: #0056b3;
+        }
+        .donate form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .donate form input, .donate form button {
+            margin: 5px 0;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
         }
     </style>
 </head>
@@ -78,6 +91,12 @@
             <div id="donate-method">
                 <!-- Тут буде відображено метод поповнення -->
             </div>
+            <form id="donate-form">
+                <input type="text" id="nickname" name="nickname" placeholder="Ваш нік" required>
+                <input type="number" id="amount" name="amount" placeholder="Сума поповнення" required>
+                <input type="email" id="email" name="email" placeholder="Ваша електронна пошта" required>
+                <button type="submit">Відправити</button>
+            </form>
         </div>
     </main>
     <footer>
@@ -98,7 +117,7 @@
                 const homeLink = document.getElementById('home-link');
 
                 if (country === 'UA') {
-                    donateDiv.innerHTML = '<a href="https://send.monobank.ua/jar/AbnKs1v1mU" target="_blank">Поповнити через Monobank</a>';
+                    donateDiv.innerHTML = '<a href="https://send.monobank.ua/jar/AbnKs1v1mU" target="_blank">Поповнити через Monobank (1 UAH = 1$)</a>';
                     countryInfo.textContent = 'Ми з України (UA)';
                     document.documentElement.lang = 'uk';
                     welcomeMessage.textContent = 'Ласкаво просимо до Credesasq Server';
@@ -107,7 +126,7 @@
                     donateDescription.textContent = 'Ви можете поповнити баланс на сервері:';
                     homeLink.textContent = 'Головна';
                 } else if (country === 'RU') {
-                    donateDiv.innerHTML = '<p>Переказати кошти на картку: 4441 1144 3486 1462</p>';
+                    donateDiv.innerHTML = '<p>Переказати кошти на картку: 4441 1144 3486 1462 (2 RUB = 1$)</p>';
                     countryInfo.textContent = 'Мы из России (RU)';
                     document.documentElement.lang = 'ru';
                     welcomeMessage.textContent = 'Добро пожаловать на Credesasq Server';
@@ -116,7 +135,7 @@
                     donateDescription.textContent = 'Вы можете пополнить баланс на сервере:';
                     homeLink.textContent = 'Главная';
                 } else {
-                    donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462</p>';
+                    donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462 (0.02 USD = 1$)</p>';
                     countryInfo.textContent = 'We are from another country (EN)';
                     document.documentElement.lang = 'en';
                     welcomeMessage.textContent = 'Welcome to Credesasq Server';
@@ -129,6 +148,18 @@
             .catch(error => {
                 console.error('Error fetching IP data:', error);
             });
+
+        document.getElementById('donate-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const nickname = document.getElementById('nickname').value;
+            const amount = document.getElementById('amount').value;
+            const email = document.getElementById('email').value;
+            const country = document.documentElement.lang.toUpperCase();
+
+            const mailtoLink = `mailto:stasikgnidan@gmail.com?subject=Поповнення балансу&body=Країна: ${country}%0AНік: ${nickname}%0AСума: ${amount}%0AEmail: ${email}`;
+            window.location.href = mailtoLink;
+        });
     </script>
 </body>
 </html>
