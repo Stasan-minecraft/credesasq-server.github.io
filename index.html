@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,36 +109,36 @@
     <header>
         <nav>
             <ul>
-                <li><a href="index.html" id="home-link">Головна</a></li>
+                <li><a href="index.html" id="home-link">Home</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1 id="welcome-message">Ласкаво просимо до Credesasq Server</h1>
-        <p id="news-announcement">Останні новини та оголошення.</p>
+        <h1 id="welcome-message">Welcome to Credesasq Server</h1>
+        <p id="news-announcement">Latest news and announcements.</p>
 
         <div class="minecraft-info">
-            <h2>Наш Minecraft сервер</h2>
+            <h2>Our Minecraft Server</h2>
             <p>IP: <strong>credesasq_server.exaroton.me:32650</strong></p>
         </div>
 
         <div class="donate">
-            <h2 id="donate-title">Поповнення балансу</h2>
-            <p id="donate-description">Ви можете поповнити баланс на сервері:</p>
+            <h2 id="donate-title">Balance Replenishment</h2>
+            <p id="donate-description">You can replenish the balance on the server:</p>
             <div id="donate-method">
-                <!-- Тут буде відображено метод поповнення -->
+                <!-- Donation method will be displayed here -->
             </div>
             <form id="donate-form">
-                <input type="text" id="nickname" name="nickname" placeholder="Ваш нік" required>
-                <input type="number" id="amount" name="amount" placeholder="Сума поповнення" required>
-                <input type="email" id="email" name="email" placeholder="Ваша електронна пошта" required>
-                <button type="submit">Відправити</button>
+                <input type="text" id="nickname" name="nickname" placeholder="Your Nickname" required>
+                <input type="number" id="amount" name="amount" placeholder="Replenishment Amount" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <button type="submit">Submit</button>
             </form>
         </div>
     </main>
     <footer>
         <p id="country-info"></p>
-        <p>Контакти: stasikgnidan@gmail.com, +380987608895</p>
+        <p>Contacts: stasikgnidan@gmail.com, +380987608895</p>
     </footer>
     <script>
         async function fetchCountryData() {
@@ -151,12 +151,72 @@
             }
         }
 
+        const translations = {
+            "en": {
+                "welcomeMessage": "Welcome to Credesasq Server",
+                "newsAnnouncement": "Latest news and announcements.",
+                "donateTitle": "Balance Replenishment",
+                "donateDescription": "You can replenish the balance on the server:",
+                "homeLink": "Home"
+            },
+            "uk": {
+                "welcomeMessage": "Ласкаво просимо до Credesasq Server",
+                "newsAnnouncement": "Останні новини та оголошення.",
+                "donateTitle": "Поповнення балансу",
+                "donateDescription": "Ви можете поповнити баланс на сервері:",
+                "homeLink": "Головна"
+            },
+            "ru": {
+                "welcomeMessage": "Добро пожаловать на Credesasq Server",
+                "newsAnnouncement": "Последние новости и объявления.",
+                "donateTitle": "Пополнение баланса",
+                "donateDescription": "Вы можете пополнить баланс на сервере:",
+                "homeLink": "Главная"
+            },
+            "ja": {
+                "welcomeMessage": "クレデサクサーバーへようこそ",
+                "newsAnnouncement": "最新のニュースとお知らせ。",
+                "donateTitle": "バランス補充",
+                "donateDescription": "サーバーのバランスを補充できます:",
+                "homeLink": "ホーム"
+            },
+            "hi": {
+                "welcomeMessage": "Credesasq सर्वर में आपका स्वागत है",
+                "newsAnnouncement": "ताज़ा खबरें और घोषणाएं।",
+                "donateTitle": "बैलेंस भरना",
+                "donateDescription": "आप सर्वर पर बैलेंस को पुनः भर सकते हैं:",
+                "homeLink": "होम"
+            },
+            "zh": {
+                "welcomeMessage": "欢迎来到Credesasq服务器",
+                "newsAnnouncement": "最新新闻和公告。",
+                "donateTitle": "余额充值",
+                "donateDescription": "您可以在服务器上充值余额：",
+                "homeLink": "主页"
+            },
+            "pt": {
+                "welcomeMessage": "Bem-vindo ao servidor Credesasq",
+                "newsAnnouncement": "Últimas notícias e anúncios.",
+                "donateTitle": "Reabastecimento de saldo",
+                "donateDescription": "Você pode reabastecer o saldo no servidor:",
+                "homeLink": "Início"
+            }
+            // Додайте інші переклади тут
+        };
+
         function getCurrencyByCountry(country) {
             const currencyMap = {
                 'UA': 'UAH',
                 'RU': 'RUB',
                 'US': 'USD',
                 'GB': 'GBP',
+                'SG': 'SGD', // Singapore Dollar
+                'JP': 'JPY', // Japanese Yen
+                'IN': 'INR', // Indian Rupee
+                'AU': 'AUD', // Australian Dollar
+                'CA': 'CAD', // Canadian Dollar
+                'CN': 'CNY', // Chinese Yuan
+                'BR': 'BRL', // Brazilian Real
                 // додайте інші країни та їхні валюти тут
             };
             return currencyMap[country] || 'USD'; // За замовчуванням USD, якщо країна не вказана
@@ -168,6 +228,13 @@
                 'RU': 'ru',
                 'US': 'en',
                 'GB': 'en',
+                'SG': 'en',
+                'JP': 'ja',
+                'IN': 'hi',
+                'AU': 'en',
+                'CA': 'en',
+                'CN': 'zh',
+                'BR': 'pt',
                 // додайте інші країни та їхні мови тут
             };
             return languageMap[country] || 'en'; // За замовчуванням англійська, якщо країна не вказана
@@ -180,6 +247,7 @@
             const country = data.country;
             const currencySymbol = getCurrencyByCountry(country);
             const language = getLanguageByCountry(country);
+            const translation = translations[language] || translations['en'];
 
             const donateDiv = document.getElementById('donate-method');
             const countryInfo = document.getElementById('country-info');
@@ -190,28 +258,14 @@
             const homeLink = document.getElementById('home-link');
 
             donateDiv.innerHTML = `<p>Transfer funds to the card: 4441 1144 3486 1462 (1 ${currencySymbol} = 1cb)</p>`;
-            countryInfo.textContent = `We are from ${country}`;
+            countryInfo.textContent = `We are from ${data.country_name}`;
             document.documentElement.lang = language;
 
-            if (language === 'uk') {
-                welcomeMessage.textContent = 'Ласкаво просимо до Credesasq Server';
-                newsAnnouncement.textContent = 'Останні новини та оголошення.';
-                donateTitle.textContent = 'Поповнення балансу';
-                donateDescription.textContent = 'Ви можете поповнити баланс на сервері:';
-                homeLink.textContent = 'Головна';
-            } else if (language === 'ru') {
-                welcomeMessage.textContent = 'Добро пожаловать на Credesasq Server';
-                newsAnnouncement.textContent = 'Последние новости и объявления.';
-                donateTitle.textContent = 'Пополнение баланса';
-                donateDescription.textContent = 'Вы можете пополнить баланс на сервере:';
-                homeLink.textContent = 'Главная';
-            } else {
-                welcomeMessage.textContent = 'Welcome to Credesasq Server';
-                newsAnnouncement.textContent = 'Latest news and announcements.';
-                donateTitle.textContent = 'Balance Replenishment';
-                donateDescription.textContent = 'You can replenish the balance on the server:';
-                homeLink.textContent = 'Home';
-            }
+            welcomeMessage.textContent = translation.welcomeMessage;
+            newsAnnouncement.textContent = translation.newsAnnouncement;
+            donateTitle.textContent = translation.donateTitle;
+            donateDescription.textContent = translation.donateDescription;
+            homeLink.textContent = translation.homeLink;
 
             // Оновити плейсхолдер для суми поповнення з урахуванням валюти
             document.getElementById('amount').placeholder = `Сума поповнення (${currencySymbol})`;
