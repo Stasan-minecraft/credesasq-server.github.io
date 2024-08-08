@@ -141,72 +141,81 @@
         <p>Контакти: stasikgnidan@gmail.com, +380987608895</p>
     </footer>
     <script>
-        fetch('https://ipapi.co/json/')
-            .then(response => response.json())
-            .then(data => {
-                const country = data.country;
-                const donateDiv = document.getElementById('donate-method');
-                const countryInfo = document.getElementById('country-info');
-                const welcomeMessage = document.getElementById('welcome-message');
-                const newsAnnouncement = document.getElementById('news-announcement');
-                const donateTitle = document.getElementById('donate-title');
-                const donateDescription = document.getElementById('donate-description');
-                const homeLink = document.getElementById('home-link');
-
-                let currencySymbol;
-                switch (country) {
-                    case 'UA':
-                        currencySymbol = 'UAH';
-                        donateDiv.innerHTML = '<p>Поповнити через Monobank (1 UAH = 1cb)</p>';
-                        countryInfo.textContent = 'Ми з України (UA)';
-                        document.documentElement.lang = 'uk';
-                        welcomeMessage.textContent = 'Ласкаво просимо до Credesasq Server';
-                        newsAnnouncement.textContent = 'Останні новини та оголошення.';
-                        donateTitle.textContent = 'Поповнення балансу';
-                        donateDescription.textContent = 'Ви можете поповнити баланс на сервері:';
-                        homeLink.textContent = 'Головна';
-                        break;
-                    case 'RU':
-                        currencySymbol = 'RUB';
-                        donateDiv.innerHTML = '<p>Переказати кошти на картку: 4441 1144 3486 1462 (1 RUB = 1cb)</p>';
-                        countryInfo.textContent = 'Мы из России (RU)';
-                        document.documentElement.lang = 'ru';
-                        welcomeMessage.textContent = 'Добро пожаловать на Credesasq Server';
-                        newsAnnouncement.textContent = 'Последние новости и объявления.';
-                        donateTitle.textContent = 'Пополнение баланса';
-                        donateDescription.textContent = 'Вы можете пополнить баланс на сервере:';
-                        homeLink.textContent = 'Главная';
-                        break;
-                    case 'US':
-                        currencySymbol = 'USD';
-                        donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462 (1 USD = 1cb)</p>';
-                        countryInfo.textContent = 'We are from the United States (US)';
-                        document.documentElement.lang = 'en';
-                        welcomeMessage.textContent = 'Welcome to Credesasq Server';
-                        newsAnnouncement.textContent = 'Latest news and announcements.';
-                        donateTitle.textContent = 'Balance Replenishment';
-                        donateDescription.textContent = 'You can replenish the balance on the server:';
-                        homeLink.textContent = 'Home';
-                        break;
-                    default:
-                        currencySymbol = 'USD';
-                        donateDiv.innerHTML = '<p>Transfer funds to the card: 4441 1144 3486 1462 (1 USD = 1cb)</p>';
-                        countryInfo.textContent = 'We are from another country (EN)';
-                        document.documentElement.lang = 'en';
-                        welcomeMessage.textContent = 'Welcome to Credesasq Server';
-                        newsAnnouncement.textContent = 'Latest news and announcements.';
-                        donateTitle.textContent = 'Balance Replenishment';
-                        donateDescription.textContent = 'You can replenish the balance on the server:';
-                        homeLink.textContent = 'Home';
-                        break;
-                }
-
-                // Оновити плейсхолдер для суми поповнення з урахуванням валюти
-                document.getElementById('amount').placeholder = `Сума поповнення (${currencySymbol})`;
-            })
-            .catch(error => {
+        async function fetchCountryData() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                return await response.json();
+            } catch (error) {
                 console.error('Error fetching IP data:', error);
-            });
+                return null;
+            }
+        }
+
+        function getCurrencyByCountry(country) {
+            const currencyMap = {
+                'UA': 'UAH',
+                'RU': 'RUB',
+                'US': 'USD',
+                'GB': 'GBP',
+                // додайте інші країни та їхні валюти тут
+            };
+            return currencyMap[country] || 'USD'; // За замовчуванням USD, якщо країна не вказана
+        }
+
+        function getLanguageByCountry(country) {
+            const languageMap = {
+                'UA': 'uk',
+                'RU': 'ru',
+                'US': 'en',
+                'GB': 'en',
+                // додайте інші країни та їхні мови тут
+            };
+            return languageMap[country] || 'en'; // За замовчуванням англійська, якщо країна не вказана
+        }
+
+        async function updatePageContent() {
+            const data = await fetchCountryData();
+            if (!data) return;
+
+            const country = data.country;
+            const currencySymbol = getCurrencyByCountry(country);
+            const language = getLanguageByCountry(country);
+
+            const donateDiv = document.getElementById('donate-method');
+            const countryInfo = document.getElementById('country-info');
+            const welcomeMessage = document.getElementById('welcome-message');
+            const newsAnnouncement = document.getElementById('news-announcement');
+            const donateTitle = document.getElementById('donate-title');
+            const donateDescription = document.getElementById('donate-description');
+            const homeLink = document.getElementById('home-link');
+
+            donateDiv.innerHTML = `<p>Transfer funds to the card: 4441 1144 3486 1462 (1 ${currencySymbol} = 1cb)</p>`;
+            countryInfo.textContent = `We are from ${country}`;
+            document.documentElement.lang = language;
+
+            if (language === 'uk') {
+                welcomeMessage.textContent = 'Ласкаво просимо до Credesasq Server';
+                newsAnnouncement.textContent = 'Останні новини та оголошення.';
+                donateTitle.textContent = 'Поповнення балансу';
+                donateDescription.textContent = 'Ви можете поповнити баланс на сервері:';
+                homeLink.textContent = 'Головна';
+            } else if (language === 'ru') {
+                welcomeMessage.textContent = 'Добро пожаловать на Credesasq Server';
+                newsAnnouncement.textContent = 'Последние новости и объявления.';
+                donateTitle.textContent = 'Пополнение баланса';
+                donateDescription.textContent = 'Вы можете пополнить баланс на сервере:';
+                homeLink.textContent = 'Главная';
+            } else {
+                welcomeMessage.textContent = 'Welcome to Credesasq Server';
+                newsAnnouncement.textContent = 'Latest news and announcements.';
+                donateTitle.textContent = 'Balance Replenishment';
+                donateDescription.textContent = 'You can replenish the balance on the server:';
+                homeLink.textContent = 'Home';
+            }
+
+            // Оновити плейсхолдер для суми поповнення з урахуванням валюти
+            document.getElementById('amount').placeholder = `Сума поповнення (${currencySymbol})`;
+        }
 
         document.getElementById('donate-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -219,6 +228,8 @@
             const mailtoLink = `https://send.monobank.ua/jar/AbnKs1v1mU?amount=${amount}&nickname=${nickname}&email=${email}`;
             window.location.href = mailtoLink;
         });
+
+        updatePageContent();
     </script>
 </body>
 </html>
