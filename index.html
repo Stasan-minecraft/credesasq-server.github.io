@@ -109,9 +109,15 @@
             padding: 15px;
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: left;
         }
         .donate-item h4 {
             margin-top: 0;
+        }
+        .donate-item button {
+            display: block;
+            margin-top: 10px;
+            width: 100%;
         }
         @media (max-width: 600px) {
             header nav ul {
@@ -155,63 +161,66 @@
             <h3>Available Donates</h3>
 
             <div class="donate-item">
-                <h4>Flyer - $15</h4>
-                <p><strong>Description:</strong> Возможность летать по миру.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/fly</code> — позволяет включать и отключать полет.</p>
+                <h4 id="flyer-title">Flyer - $15</h4>
+                <p id="flyer-description"><strong>Description:</strong> Возможность летать по миру.</p>
+                <p id="flyer-ability"><strong>Что могут делать:</strong> Команда <code>/fly</code> — позволяет включать и отключать полет.</p>
+                <button onclick="buyDonate('Flyer', 15)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>Healer - $20</h4>
-                <p><strong>Description:</strong> Лечение себя и других игроков.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/heal</code> — моментальное восстановление здоровья.</p>
+                <h4 id="healer-title">Healer - $20</h4>
+                <p id="healer-description"><strong>Description:</strong> Лечение себя и других игроков.</p>
+                <p id="healer-ability"><strong>Что могут делать:</strong> Команда <code>/heal</code> — моментальное восстановление здоровья.</п>
+                <button onclick="buyDonate('Healer', 20)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>Teleporter - $18</h4>
-                <p><strong>Description:</strong> Мгновенное перемещение по карте.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/tp</code> — телепортация в любую точку или к любому игроку.</p>
+                <h4 id="teleporter-title">Teleporter - $18</h4>
+                <п id="teleporter-description"><strong>Description:</strong> Мгновенное перемещение по карте.</п>
+                <п id="teleporter-ability"><strong>Что могут делать:</strong> Команда <code>/tp</code> — телепортация в любую точку или к любому игроку.</п>
+                <button onclick="buyDonate('Teleporter', 18)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>RepairMaster - $12</h4>
-                <p><strong>Description:</strong> Ремонт предметов без наковальни.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/repair</code> — мгновенно чинит предметы в руках.</p>
+                <h4 id="repairmaster-title">RepairMaster - $12</h4>
+                <п id="repairmaster-description"><strong>Description:</strong> Ремонт предметов без наковальни.</п>
+                <п id="repairmaster-ability"><strong>Что могут делать:</strong> Команда <code>/repair</code> — мгновенно чинит предметы в руках.</п>
+                <button onclick="buyDonate('RepairMaster', 12)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>TimeChanger - $10</h4>
-                <p><strong>Description:</strong> Изменение времени суток.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/time set day/night</code> — устанавливает день или ночь.</p>
+                <h4 id="timechanger-title">TimeChanger - $10</h4>
+                <п id="timechanger-description"><strong>Description:</strong> Изменение времени суток.</п>
+                <п id="timechanger-ability"><strong>Что могут делать:</strong> Команда <code>/time set day/night</code> — устанавливает день или ночь.</п>
+                <button onclick="buyDonate('TimeChanger', 10)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>WeatherMaster - $12</h4>
-                <p><strong>Description:</strong> Контроль над погодой.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/weather clear/rain</code> — изменяет погоду на ясную или дождливую.</p>
+                <h4 id="weathermaster-title">WeatherMaster - $12</h4>
+                <п id="weathermaster-description"><strong>Description:</strong> Контроль над погодой.</п>
+                <п id="weathermaster-ability"><strong>Что могут делать:</strong> Команда <code>/weather clear/rain</code> — изменяет погоду на ясную или дождливую.</п>
+                <button onclick="buyDonate('WeatherMaster', 12)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>GodMode - $30</h4>
-                <p><strong>Description:</strong> Полная неуязвимость.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/god</code> — включает режим бессмертия.</p>
+                <h4 id="godmode-title">GodMode - $30</h4>
+                <п id="godmode-description"><strong>Description:</strong> Полная неуязвимость.</п>
+                <п id="godmode-ability"><strong>Что могут делать:</strong> Команда <code>/god</code> — включает режим бессмертия.</п>
+                <button onclick="buyDonate('GodMode', 30)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>Back - $15</h4>
-                <p><strong>Description:</strong> Возврат на предыдущую позицию.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/back</code> — возвращает на последнее место смерти или телепортации.</p>
+                <h4 id="back-title">Back - $15</h4>
+                <п id="back-description"><strong>Description:</strong> Возврат на предыдущую позицию.</п>
+                <п id="back-ability"><strong>Что могут делать:</strong> Команда <code>/back</code> — возвращает на последнее место смерти или телепортации.</п>
+                <button onclick="buyDonate('Back', 15)">Купити донат</button>
             </div>
 
             <div class="donate-item">
-                <h4>Feed - $10</h4>
-                <p><strong>Description:</strong> Утоление голода.</p>
-                <p><strong>Что могут делать:</strong> Команда <code>/feed</code> — мгновенно восполняет шкалу голода.</p>
-            </div>
-
-            <div class="donate-item">
-                <h4>Invisibility - $25</h4>
-                <p><strong>Description:</strong> Невидимость для других игроков.</п>
-                <p><strong>Что могут делать:</strong> Команда <code>/vanish</code> — делает игрока невидимым.</p>
+                <h4 id="dhelper-title">D.HELPER - $100</h4>
+                <п id="dhelper-description"><strong>Description:</strong> Ця привілея дозволяє робити мут і унмут гравців і не випадає з кейсів.</п>
+                <п id="dhelper-ability"><strong>Доступ:</strong> Вона доступна тільки для окремої покупки.</п>
+                <button onclick="buyDonate('D.HELPER', 100)">Купити донат</button>
             </div>
         </div>
 
@@ -240,71 +249,107 @@
                 "newsAnnouncement": "Latest news and announcements.",
                 "donateTitle": "Balance Replenishment",
                 "donateDescription": "You can replenish the balance on the server:",
-                "homeLink": "Home"
+                "homeLink": "Home",
+                "buyButton": "Buy Donate",
+                "flyerTitle": "Flyer - $15",
+                "flyerDescription": "Possibility to fly around the world.",
+                "flyerAbility": "What can they do: The command /fly allows you to enable and disable flight.",
+                "healerTitle": "Healer - $20",
+                "healerDescription": "Healing yourself and other players.",
+                "healerAbility": "What can they do: The command /heal instantly restores health.",
+                "teleporterTitle": "Teleporter - $18",
+                "teleporterDescription": "Instant movement around the map.",
+                "teleporterAbility": "What can they do: The command /tp teleports to any point or to any player.",
+                "repairmasterTitle": "RepairMaster - $12",
+                "repairmasterDescription": "Repair items without an anvil.",
+                "repairmasterAbility": "What can they do: The command /repair instantly repairs items in hand.",
+                "timechangerTitle": "TimeChanger - $10",
+                "timechangerDescription": "Change the time of day.",
+                "timechangerAbility": "What can they do: The command /time set day/night sets day or night.",
+                "weathermasterTitle": "WeatherMaster - $12",
+                "weathermasterDescription": "Control the weather.",
+                "weathermasterAbility": "What can they do: The command /weather clear/rain changes the weather to clear or rainy.",
+                "godmodeTitle": "GodMode - $30",
+                "godmodeDescription": "Complete invulnerability.",
+                "godmodeAbility": "What can they do: The command /god enables god mode.",
+                "backTitle": "Back - $15",
+                "backDescription": "Return to the previous position.",
+                "backAbility": "What can they do: The command /back returns to the last place of death or teleportation.",
+                "dhelperTitle": "D.HELPER - $100",
+                "dhelperDescription": "This privilege allows you to mute and unmute players and does not drop from cases.",
+                "dhelperAbility": "Available: It is available only for a separate purchase."
             },
             "uk": {
                 "welcomeMessage": "Ласкаво просимо до Credesasq Server",
                 "newsAnnouncement": "Останні новини та оголошення.",
                 "donateTitle": "Поповнення балансу",
                 "donateDescription": "Ви можете поповнити баланс на сервері:",
-                "homeLink": "Головна"
+                "homeLink": "Головна",
+                "buyButton": "Купити донат",
+                "flyerTitle": "Flyer - $15",
+                "flyerDescription": "Можливість літати по світу.",
+                "flyerAbility": "Що можуть робити: Команда /fly дозволяє вмикати та вимикати політ.",
+                "healerTitle": "Healer - $20",
+                "healerDescription": "Лікування себе та інших гравців.",
+                "healerAbility": "Що можуть робити: Команда /heal миттєво відновлює здоров'я.",
+                "teleporterTitle": "Teleporter - $18",
+                "teleporterDescription": "Миттєве переміщення по карті.",
+                "teleporterAbility": "Що можуть робити: Команда /tp телепортує до будь-якої точки або до будь-якого гравця.",
+                "repairmasterTitle": "RepairMaster - $12",
+                "repairmasterDescription": "Ремонт предметів без ковадла.",
+                "repairmasterAbility": "Що можуть робити: Команда /repair миттєво ремонтує предмети в руках.",
+                "timechangerTitle": "TimeChanger - $10",
+                "timechangerDescription": "Зміна часу доби.",
+                "timechangerAbility": "Що можуть робити: Команда /time set day/night встановлює день або ніч.",
+                "weathermasterTitle": "WeatherMaster - $12",
+                "weathermasterDescription": "Контроль погоди.",
+                "weathermasterAbility": "Що можуть робити: Команда /weather clear/rain змінює погоду на ясну або дощову.",
+                "godmodeTitle": "GodMode - $30",
+                "godmodeDescription": "Повна невразливість.",
+                "godmodeAbility": "Що можуть робити: Команда /god включає режим бога.",
+                "backTitle": "Back - $15",
+                "backDescription": "Повернення на попередню позицію.",
+                "backAbility": "Що можуть робити: Команда /back повертає на останнє місце смерті або телепортації.",
+                "dhelperTitle": "D.HELPER - $100",
+                "dhelperDescription": "Ця привілея дозволяє робити мут і унмут гравців і не випадає з кейсів.",
+                "dhelperAbility": "Доступно: Вона доступна тільки для окремої покупки."
             },
             "ru": {
                 "welcomeMessage": "Добро пожаловать на Credesasq Server",
                 "newsAnnouncement": "Последние новости и объявления.",
                 "donateTitle": "Пополнение баланса",
                 "donateDescription": "Вы можете пополнить баланс на сервере:",
-                "homeLink": "Главная"
-            },
-            "fr": {
-                "welcomeMessage": "Bienvenue sur le serveur Credesasq",
-                "newsAnnouncement": "Dernières nouvelles et annonces.",
-                "donateTitle": "Rechargement de solde",
-                "donateDescription": "Vous pouvez recharger le solde sur le serveur :",
-                "homeLink": "Accueil"
-            },
-            "de": {
-                "welcomeMessage": "Willkommen auf dem Credesasq-Server",
-                "newsAnnouncement": "Neueste Nachrichten und Ankündigungen.",
-                "donateTitle": "Kontostand aufladen",
-                "donateDescription": "Sie können das Guthaben auf dem Server aufladen:",
-                "homeLink": "Startseite"
-            },
-            "es": {
-                "welcomeMessage": "Bienvenido al servidor de Credesasq",
-                "newsAnnouncement": "Últimas noticias y anuncios.",
-                "donateTitle": "Recarga de saldo",
-                "donateDescription": "Puedes recargar el saldo en el servidor:",
-                "homeLink": "Inicio"
-            },
-            "zh": {
-                "welcomeMessage": "欢迎来到Credesasq服务器",
-                "newsAnnouncement": "最新新闻和公告。",
-                "donateTitle": "余额充值",
-                "donateDescription": "您可以在服务器上充值余额：",
-                "homeLink": "主页"
-            },
-            "ja": {
-                "welcomeMessage": "クレデサクサーバーへようこそ",
-                "newsAnnouncement": "最新のニュースとお知らせ。",
-                "donateTitle": "バランス補充",
-                "donateDescription": "サーバーのバランスを補充できます:",
-                "homeLink": "ホーム"
-            },
-            "hi": {
-                "welcomeMessage": "Credesasq सर्वर में आपका स्वागत है",
-                "newsAnnouncement": "ताज़ा खबरें और घोषणाएं।",
-                "donateTitle": "बैलेंस भरना",
-                "donateDescription": "आप सर्वर पर बैलेंस को पुनः भर सकते हैं:",
-                "homeLink": "होम"
-            },
-            "pt": {
-                "welcomeMessage": "Bem-vindo ao servidor Credesasq",
-                "newsAnnouncement": "Últimas notícias e anúncios.",
-                "donateTitle": "Reabastecimento de saldo",
-                "donateDescription": "Você pode reabastecer o saldo no servidor:",
-                "homeLink": "Início"
+                "homeLink": "Главная",
+                "buyButton": "Купить донат",
+                "flyerTitle": "Flyer - $15",
+                "flyerDescription": "Возможность летать по миру.",
+                "flyerAbility": "Что могут делать: Команда /fly позволяет включать и отключать полет.",
+                "healerTitle": "Healer - $20",
+                "healerDescription": "Лечение себя и других игроков.",
+                "healerAbility": "Что могут делать: Команда /heal — моментальное восстановление здоровья.",
+                "teleporterTitle": "Teleporter - $18",
+                "teleporterDescription": "Мгновенное перемещение по карте.",
+                "teleporterAbility": "Что могут делать: Команда /tp телепортация в любую точку или к любому игроку.",
+                "repairmasterTitle": "RepairMaster - $12",
+                "repairmasterDescription": "Ремонт предметов без наковальни.",
+                "repairmasterAbility": "Что могут делать: Команда /repair мгновенно чинит предметы в руках.",
+                "timechangerTitle": "TimeChanger - $10",
+                "timechangerDescription": "Изменение времени суток.",
+                "timechangerAbility": "Что могут делать: Команда /time set day/night устанавливает день или ночь.",
+                "weathermasterTitle": "WeatherMaster - $12",
+                "weathermasterDescription": "Контроль над погодой.",
+                "weathermasterAbility": "Что могут делать: Команда /weather clear/rain изменяет погоду на ясную или дождливую.",
+                "godmodeTitle": "GodMode - $30",
+                "godmodeDescription": "Полная неуязвимость.",
+                "godmodeAbility": "Что могут делать: Команда /god включает режим бессмертия.",
+                "backTitle": "Back - $15",
+                "backDescription": "Возврат на предыдущую позицию.",
+                "backAbility": "Что могут делать: Команда /back возвращает на последнее место смерти или телепортации.",
+                "dhelperTitle": "D.HELPER - $100",
+                "dhelperDescription": "Эта привилегия позволяет мутить и размутивать игроков и не выпадает из кейсов.",
+                "dhelperAbility": "Доступно: Она доступна только для отдельной покупки."
             }
+            // Додати інші переклади тут
         };
 
         async function fetchCountryData() {
@@ -423,26 +468,62 @@
             const language = getLanguageByCountry(country);
             const translation = translations[language] || translations['en'];
 
-            const donateDiv = document.getElementById('donate-method');
-            const countryInfo = document.getElementById('country-info');
-            const welcomeMessage = document.getElementById('welcome-message');
-            const newsAnnouncement = document.getElementById('news-announcement');
-            const donateTitle = document.getElementById('donate-title');
-            const donateDescription = document.getElementById('donate-description');
-            const homeLink = document.getElementById('home-link');
-
-            donateDiv.innerHTML = `<p>Transfer funds to the card: 4441 1144 3486 1462 (1 ${currencySymbol} = 1cb)</p>`;
-            countryInfo.textContent = `We are from ${data.country_name}`;
             document.documentElement.lang = language;
 
-            welcomeMessage.textContent = translation.welcomeMessage;
-            newsAnnouncement.textContent = translation.newsAnnouncement;
-            donateTitle.textContent = translation.donateTitle;
-            donateDescription.textContent = translation.donateDescription;
-            homeLink.textContent = translation.homeLink;
+            document.getElementById('welcome-message').textContent = translation.welcomeMessage;
+            document.getElementById('news-announcement').textContent = translation.newsAnnouncement;
+            document.getElementById('donate-title').textContent = translation.donateTitle;
+            document.getElementById('donate-description').textContent = translation.donateDescription;
+            document.getElementById('home-link').textContent = translation.homeLink;
+            
+            document.getElementById('flyer-title').textContent = translation.flyerTitle;
+            document.getElementById('flyer-description').textContent = translation.flyerDescription;
+            document.getElementById('flyer-ability').textContent = translation.flyerAbility;
+            
+            document.getElementById('healer-title').textContent = translation.healerTitle;
+            document.getElementById('healer-description').textContent = translation.healerDescription;
+            document.getElementById('healer-ability').textContent = translation.healerAbility;
+            
+            document.getElementById('teleporter-title').textContent = translation.teleporterTitle;
+            document.getElementById('teleporter-description').textContent = translation.teleporterDescription;
+            document.getElementById('teleporter-ability').textContent = translation.teleporterAbility;
+            
+            document.getElementById('repairmaster-title').textContent = translation.repairmasterTitle;
+            document.getElementById('repairmaster-description').textContent = translation.repairmasterDescription;
+            document.getElementById('repairmaster-ability').textContent = translation.repairmasterAbility;
+            
+            document.getElementById('timechanger-title').textContent = translation.timechangerTitle;
+            document.getElementById('timechanger-description').textContent = translation.timechangerDescription;
+            document.getElementById('timechanger-ability').textContent = translation.timechangerAbility;
+            
+            document.getElementById('weathermaster-title').textContent = translation.weathermasterTitle;
+            document.getElementById('weathermaster-description').textContent = translation.weathermasterDescription;
+            document.getElementById('weathermaster-ability').textContent = translation.weathermasterAbility;
+            
+            document.getElementById('godmode-title').textContent = translation.godmodeTitle;
+            document.getElementById('godmode-description').textContent = translation.godmodeDescription;
+            document.getElementById('godmode-ability').textContent = translation.godmodeAbility;
+            
+            document.getElementById('back-title').textContent = translation.backTitle;
+            document.getElementById('back-description').textContent = translation.backDescription;
+            document.getElementById('back-ability').textContent = translation.backAbility;
+            
+            document.getElementById('dhelper-title').textContent = translation.dhelperTitle;
+            document.getElementById('dhelper-description').textContent = translation.dhelperDescription;
+            document.getElementById('dhelper-ability').textContent = translation.dhelperAbility;
 
-            // Оновити плейсхолдер для суми поповнення з урахуванням валюти
+            const donateDiv = document.getElementById('donate-method');
+            donateDiv.innerHTML = `<p>Transfer funds to the card: 4441 1144 3486 1462 (1 ${currencySymbol} = 1cb)</p>`;
+            document.getElementById('country-info').textContent = `We are from ${data.country_name}`;
             document.getElementById('amount').placeholder = `Replenishment Amount (${currencySymbol})`;
+        }
+
+        function buyDonate(donateName, amount) {
+            const nickname = prompt("Please enter your nickname:");
+            if (nickname) {
+                const mailtoLink = `https://send.monobank.ua/jar/5rD1KwjWzE?amount=${amount}&nickname=${nickname}`;
+                window.location.href = mailtoLink;
+            }
         }
 
         document.getElementById('donate-form').addEventListener('submit', function(event) {
@@ -451,9 +532,8 @@
             const nickname = document.getElementById('nickname').value;
             const amount = document.getElementById('amount').value;
             const email = document.getElementById('email').value;
-            const country = document.documentElement.lang.toUpperCase();
 
-            const mailtoLink = `https://send.monobank.ua/jar/AbnKs1v1mU?amount=${amount}&nickname=${nickname}&email=${email}`;
+            const mailtoLink = `https://send.monobank.ua/jar/5rD1KwjWzE?amount=${amount}&nickname=${nickname}&email=${email}`;
             window.location.href = mailtoLink;
         });
 
