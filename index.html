@@ -141,7 +141,78 @@
         <p>Contacts: stasikgnidan@gmail.com, +380987608895</p>
     </footer>
     <script>
-        const apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY';
+        const translations = {
+            "en": {
+                "welcomeMessage": "Welcome to Credesasq Server",
+                "newsAnnouncement": "Latest news and announcements.",
+                "donateTitle": "Balance Replenishment",
+                "donateDescription": "You can replenish the balance on the server:",
+                "homeLink": "Home"
+            },
+            "uk": {
+                "welcomeMessage": "Ласкаво просимо до Credesasq Server",
+                "newsAnnouncement": "Останні новини та оголошення.",
+                "donateTitle": "Поповнення балансу",
+                "donateDescription": "Ви можете поповнити баланс на сервері:",
+                "homeLink": "Головна"
+            },
+            "ru": {
+                "welcomeMessage": "Добро пожаловать на Credesasq Server",
+                "newsAnnouncement": "Последние новости и объявления.",
+                "donateTitle": "Пополнение баланса",
+                "donateDescription": "Вы можете пополнить баланс на сервере:",
+                "homeLink": "Главная"
+            },
+            "fr": {
+                "welcomeMessage": "Bienvenue sur le serveur Credesasq",
+                "newsAnnouncement": "Dernières nouvelles et annonces.",
+                "donateTitle": "Rechargement de solde",
+                "donateDescription": "Vous pouvez recharger le solde sur le serveur :",
+                "homeLink": "Accueil"
+            },
+            "de": {
+                "welcomeMessage": "Willkommen auf dem Credesasq-Server",
+                "newsAnnouncement": "Neueste Nachrichten und Ankündigungen.",
+                "donateTitle": "Kontostand aufladen",
+                "donateDescription": "Sie können das Guthaben auf dem Server aufladen:",
+                "homeLink": "Startseite"
+            },
+            "es": {
+                "welcomeMessage": "Bienvenido al servidor de Credesasq",
+                "newsAnnouncement": "Últimas noticias y anuncios.",
+                "donateTitle": "Recarga de saldo",
+                "donateDescription": "Puedes recargar el saldo en el servidor:",
+                "homeLink": "Inicio"
+            },
+            "zh": {
+                "welcomeMessage": "欢迎来到Credesasq服务器",
+                "newsAnnouncement": "最新新闻和公告。",
+                "donateTitle": "余额充值",
+                "donateDescription": "您可以在服务器上充值余额：",
+                "homeLink": "主页"
+            },
+            "ja": {
+                "welcomeMessage": "クレデサクサーバーへようこそ",
+                "newsAnnouncement": "最新のニュースとお知らせ。",
+                "donateTitle": "バランス補充",
+                "donateDescription": "サーバーのバランスを補充できます:",
+                "homeLink": "ホーム"
+            },
+            "hi": {
+                "welcomeMessage": "Credesasq सर्वर में आपका स्वागत है",
+                "newsAnnouncement": "ताज़ा खबरें और घोषणाएं।",
+                "donateTitle": "बैलेंस भरना",
+                "donateDescription": "आप सर्वर पर बैलेंस को पुनः भर सकते हैं:",
+                "homeLink": "होम"
+            },
+            "pt": {
+                "welcomeMessage": "Bem-vindo ao servidor Credesasq",
+                "newsAnnouncement": "Últimas notícias e anúncios.",
+                "donateTitle": "Reabastecimento de saldo",
+                "donateDescription": "Você pode reabastecer o saldo no servidor:",
+                "homeLink": "Início"
+            }
+        };
 
         async function fetchCountryData() {
             try {
@@ -150,27 +221,6 @@
             } catch (error) {
                 console.error('Error fetching IP data:', error);
                 return null;
-            }
-        }
-
-        async function translateText(text, targetLang) {
-            try {
-                const response = await fetch(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}`, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        q: text,
-                        target: targetLang,
-                        format: 'text'
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                return data.data.translations[0].translatedText;
-            } catch (error) {
-                console.error('Error translating text:', error);
-                return text; // повернути оригінальний текст у випадку помилки
             }
         }
 
@@ -188,6 +238,8 @@
                 'CN': 'CNY', // Chinese Yuan
                 'BR': 'BRL', // Brazilian Real
                 'FR': 'EUR', // Euro
+                'DE': 'EUR', // Euro
+                'ES': 'EUR', // Euro
                 // додайте інші країни та їхні валюти тут
             };
             return currencyMap[country] || 'USD'; // За замовчуванням USD, якщо країна не вказана
@@ -207,6 +259,8 @@
                 'CN': 'zh',
                 'BR': 'pt',
                 'FR': 'fr',
+                'DE': 'de',
+                'ES': 'es',
                 // додайте інші країни та їхні мови тут
             };
             return languageMap[country] || 'en'; // За замовчуванням англійська, якщо країна не вказана
@@ -219,6 +273,7 @@
             const country = data.country;
             const currencySymbol = getCurrencyByCountry(country);
             const language = getLanguageByCountry(country);
+            const translation = translations[language] || translations['en'];
 
             const donateDiv = document.getElementById('donate-method');
             const countryInfo = document.getElementById('country-info');
@@ -232,14 +287,14 @@
             countryInfo.textContent = `We are from ${data.country_name}`;
             document.documentElement.lang = language;
 
-            welcomeMessage.textContent = await translateText('Welcome to Credesasq Server', language);
-            newsAnnouncement.textContent = await translateText('Latest news and announcements.', language);
-            donateTitle.textContent = await translateText('Balance Replenishment', language);
-            donateDescription.textContent = await translateText('You can replenish the balance on the server:', language);
-            homeLink.textContent = await translateText('Home', language);
+            welcomeMessage.textContent = translation.welcomeMessage;
+            newsAnnouncement.textContent = translation.newsAnnouncement;
+            donateTitle.textContent = translation.donateTitle;
+            donateDescription.textContent = translation.donateDescription;
+            homeLink.textContent = translation.homeLink;
 
             // Оновити плейсхолдер для суми поповнення з урахуванням валюти
-            document.getElementById('amount').placeholder = await translateText(`Replenishment Amount (${currencySymbol})`, language);
+            document.getElementById('amount').placeholder = `Replenishment Amount (${currencySymbol})`;
         }
 
         document.getElementById('donate-form').addEventListener('submit', function(event) {
