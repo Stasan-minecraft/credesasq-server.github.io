@@ -42,16 +42,18 @@
             text-align: center;
             max-width: 800px;
             margin: auto;
+            padding-bottom: 100px; /* Додано для видимості нижнього блоку */
         }
         footer {
             background-color: #007bff;
             color: white;
             text-align: center;
-            padding: 15px 0;
-            position: fixed;
+            padding: 10px 0;
+            position: relative;
             bottom: 0;
             width: 100%;
             box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
         }
         .donate {
             margin: 20px 0;
@@ -69,6 +71,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
         .donate a:hover, .donate button:hover {
             background-color: #0056b3;
@@ -116,6 +119,17 @@
             }
             .donate form input, .donate form button {
                 width: 100%;
+            }
+            .minecraft-info, .donate-info {
+                padding: 15px;
+                text-align: center;
+            }
+            .donate-item {
+                padding: 10px;
+            }
+            footer {
+                padding: 15px;
+                font-size: 14px;
             }
         }
     </style>
@@ -196,7 +210,7 @@
 
             <div class="donate-item">
                 <h4>Invisibility - $25</h4>
-                <p><strong>Description:</strong> Невидимость для других игроков.</p>
+                <p><strong>Description:</strong> Невидимость для других игроков.</п>
                 <p><strong>Что могут делать:</strong> Команда <code>/vanish</code> — делает игрока невидимым.</p>
             </div>
         </div>
@@ -319,6 +333,34 @@
                 'FR': 'EUR', // Euro
                 'DE': 'EUR', // Euro
                 'ES': 'EUR', // Euro
+                'IT': 'EUR', // Euro
+                'NL': 'EUR', // Euro
+                'BE': 'EUR', // Euro
+                'AT': 'EUR', // Euro
+                'CH': 'CHF', // Swiss Franc
+                'SE': 'SEK', // Swedish Krona
+                'NO': 'NOK', // Norwegian Krone
+                'DK': 'DKK', // Danish Krone
+                'PL': 'PLN', // Polish Zloty
+                'CZ': 'CZK', // Czech Koruna
+                'HU': 'HUF', // Hungarian Forint
+                'TR': 'TRY', // Turkish Lira
+                'MX': 'MXN', // Mexican Peso
+                'AR': 'ARS', // Argentine Peso
+                'ZA': 'ZAR', // South African Rand
+                'NG': 'NGN', // Nigerian Naira
+                'KR': 'KRW', // South Korean Won
+                'HK': 'HKD', // Hong Kong Dollar
+                'MY': 'MYR', // Malaysian Ringgit
+                'TH': 'THB', // Thai Baht
+                'NZ': 'NZD', // New Zealand Dollar
+                'PH': 'PHP', // Philippine Peso
+                'ID': 'IDR', // Indonesian Rupiah
+                'IL': 'ILS', // Israeli Shekel
+                'EG': 'EGP', // Egyptian Pound
+                'SA': 'SAR', // Saudi Riyal
+                'AE': 'AED', // UAE Dirham
+                'IN': 'INR', // Indian Rupee
                 // додайте інші країни та їхні валюти тут
             };
             return currencyMap[country] || 'USD'; // За замовчуванням USD, якщо країна не вказана
@@ -340,6 +382,33 @@
                 'FR': 'fr',
                 'DE': 'de',
                 'ES': 'es',
+                'IT': 'it',
+                'NL': 'nl',
+                'BE': 'fr',
+                'AT': 'de',
+                'CH': 'de',
+                'SE': 'sv',
+                'NO': 'no',
+                'DK': 'da',
+                'PL': 'pl',
+                'CZ': 'cs',
+                'HU': 'hu',
+                'TR': 'tr',
+                'MX': 'es',
+                'AR': 'es',
+                'ZA': 'en',
+                'NG': 'en',
+                'KR': 'ko',
+                'HK': 'zh',
+                'MY': 'ms',
+                'TH': 'th',
+                'NZ': 'en',
+                'PH': 'en',
+                'ID': 'id',
+                'IL': 'he',
+                'EG': 'ar',
+                'SA': 'ar',
+                'AE': 'ar',
                 // додайте інші країни та їхні мови тут
             };
             return languageMap[country] || 'en'; // За замовчуванням англійська, якщо країна не вказана
