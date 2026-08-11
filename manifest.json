@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.0.0",
-  "build": 400,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/SensarTranslate-update.zip.b64.part",
+  "version": "4.1.0",
+  "build": 410,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.1-final/SensarTranslate-update.zip.b64.part",
   "part_count": 7,
-  "sha256": "2b3fa24a9b948ea2209d75d7c59ca1b1ec3be15bc097bc800920dfc6dfae870d",
-  "zip_sha256": "128bf900ebf70b45a30b635287d5526896570aa2fd314ec1e70826809fb83503",
+  "sha256": "1f2381721733fc334dba4507e9f78b8396a88b4cda5cb8c0de8d39955083fe90",
+  "zip_sha256": "fedf3112b66687d96a30bea1c68ff7c650447cdec445c46034240fad19e87328",
   "mandatory": false,
   "released_at": "2026-08-11",
-  "notes": "v4.0: OCR selection reliability fixes, improved EN/UK auto-detect, My Dictionary with Ctrl+Alt+Y and star saving, and SHA-256 verified AUTO / POPUP / MANUAL updates with Ctrl+Alt+U."
+  "notes": "FIRST UPDATE v4.1: rebuilt EN/UK language brain with dedicated en-US + uk-UA OCR consensus, hard script lock, Ukrainian-specific letters, word/suffix/n-gram scoring, confidence voting and Google verification that cannot override strong Cyrillic evidence. Also adds the card dictionary with Favorites and Classic/Super update popups."
 }
