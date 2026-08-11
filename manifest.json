@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.1.0",
-  "build": 410,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.1-brain2/SensarTranslate-update.zip.b64.part",
-  "part_count": 6,
-  "sha256": "3692e3f7ad55cd9c18e183d98d5225df88fa5fad622ca60a50c31dd901db85e2",
-  "zip_sha256": "21512582796cadeb847ee45b7c958314cd472201c0ba489ac9162c80dfff1f04",
+  "version": "4.1.1",
+  "build": 411,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.1.1-live/SensarTranslate-update.zip.b64.part",
+  "part_count": 4,
+  "sha256": "285c2b07d4e192d39ee094ea0337cf0257aa2f95aa6b7470767cb44f4b43bd8b",
+  "zip_sha256": "85e0e0e5f13f7adf3dfb1b350a941cbeb64e5478d9072aa6fc5f4a738973a30c",
   "mandatory": false,
   "released_at": "2026-08-11",
-  "notes": "v4.1 FIRST UPDATE: rebuilt EN/UK Language Brain with dedicated uk-UA/en-US OCR script locks, multi-pass stability consensus, expanded Ukrainian vocabulary/n-grams, and Google used only as an unlocked verifier. Fixes Ukrainian text being mislabeled EN->UK."
+  "notes": "FIRST UPDATE v4.1.1 FINAL: stronger EN/UK Language Brain with final Cyrillic/Latin hard locks; dictionary and favorites; live 0-100% verified update progress; automatic safe EXE replacement and restart at 100%."
 }
