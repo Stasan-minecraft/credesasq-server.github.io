@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.3.0",
-  "build": 430,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.3.0-final/SensarTranslate-update.zip.b64.part",
+  "version": "4.3.1",
+  "build": 431,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.3.1-popup-hotfix/SensarTranslate-update.zip.b64.part",
   "part_count": 8,
-  "sha256": "2a2da1e3a6e6dbe0a652d57e3a651dc699b6528831389b456baf7a74c097ed4c",
-  "zip_sha256": "5f11e086c6b21d1036150aa7da367d8e35ffbe3642b66d91480cde37c40011ef",
+  "sha256": "019a8768b1c0ecf1c2799ac3608d2f099e312d64ecb98c79a17261e60b5130c2",
+  "zip_sha256": "b35ab4f30997ac06b07331682a4dd6632996149290bcd31dc86cfd7e39cd1fa3",
   "mandatory": false,
   "released_at": "2026-08-11",
-  "notes": "v4.3.0 LANGUAGE BRAIN: fixes Ukrainian being detected as English. Both en-US and uk-UA OCR engines are now required; missing OCR is auto-repaired. Cyrillic script truth and dedicated uk-UA multi-pass consensus outrank English look-alikes, and Google can no longer override the locally detected source language."
+  "notes": "v4.3.1 POPUP HOTFIX: fixes the translation result popup sometimes not appearing after OCR. Sensar now explicitly re-shows/repositions the topmost result window, uses a short visibility watchdog, falls back to screen center on placement failure, and tray-click restores the current popup. Keeps v4.3 EN/UK Language Brain."
 }
