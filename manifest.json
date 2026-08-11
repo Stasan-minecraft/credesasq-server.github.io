@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.1.1",
-  "build": 411,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.1.1-bridge/SensarTranslate-update.zip.b64.part",
-  "part_count": 5,
-  "sha256": "285c2b07d4e192d39ee094ea0337cf0257aa2f95aa6b7470767cb44f4b43bd8b",
-  "zip_sha256": "85e0e0e5f13f7adf3dfb1b350a941cbeb64e5478d9072aa6fc5f4a738973a30c",
+  "version": "4.2.0",
+  "build": 420,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.2.0-stable/SensarTranslate-update.zip.b64.part",
+  "part_count": 9,
+  "sha256": "1d7d7928cdc55804f2234de50ac0625d553490d9f29aa7bd262aec6718bae960",
+  "zip_sha256": "46713e5fa599ffe718c9bc1d02677d58b58abac9ef86d7952d5ddfc6dab03d2e",
   "mandatory": false,
   "released_at": "2026-08-11",
-  "notes": "FIRST UPDATE v4.1.1 FINAL: stronger EN/UK Language Brain with final Cyrillic/Latin hard locks; dictionary and favorites; live 0-100% verified update progress; automatic safe EXE replacement and restart at 100%."
+  "notes": "v4.2.0 HOTFIX: fixes OCR worker unreadable-result failures, restores the stable OCR core, adds automatic worker retry/recovery, and keeps EN/UK detection, dictionary/favorites, plus verified 0-100% auto-update with restart."
 }
