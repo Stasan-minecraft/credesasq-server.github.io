@@ -3,11 +3,11 @@
   "channel": "stable",
   "version": "4.1.0",
   "build": 410,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.1-final/SensarTranslate-update.zip.b64.part",
-  "part_count": 7,
-  "sha256": "1f2381721733fc334dba4507e9f78b8396a88b4cda5cb8c0de8d39955083fe90",
-  "zip_sha256": "fedf3112b66687d96a30bea1c68ff7c650447cdec445c46034240fad19e87328",
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.1-brain2/SensarTranslate-update.zip.b64.part",
+  "part_count": 6,
+  "sha256": "3692e3f7ad55cd9c18e183d98d5225df88fa5fad622ca60a50c31dd901db85e2",
+  "zip_sha256": "21512582796cadeb847ee45b7c958314cd472201c0ba489ac9162c80dfff1f04",
   "mandatory": false,
   "released_at": "2026-08-11",
-  "notes": "FIRST UPDATE v4.1: rebuilt EN/UK language brain with dedicated en-US + uk-UA OCR consensus, hard script lock, Ukrainian-specific letters, word/suffix/n-gram scoring, confidence voting and Google verification that cannot override strong Cyrillic evidence. Also adds the card dictionary with Favorites and Classic/Super update popups."
+  "notes": "v4.1 FIRST UPDATE: rebuilt EN/UK Language Brain with dedicated uk-UA/en-US OCR script locks, multi-pass stability consensus, expanded Ukrainian vocabulary/n-grams, and Google used only as an unlocked verifier. Fixes Ukrainian text being mislabeled EN->UK."
 }
