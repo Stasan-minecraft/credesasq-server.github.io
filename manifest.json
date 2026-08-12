@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.6.1",
-  "build": 461,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.6.1-no-auth/SensarTranslate-update.zip.b64.part",
-  "part_count": 7,
-  "sha256": "896493a1ce07bb2cf9fa069a4b53ee4eb582831f28fd6b5faff099c80678d265",
-  "zip_sha256": "7a5f6c457e791a7bbe4d70906d8814434004efb44eb7664858cdde0c1f6ec21b",
+  "version": "4.6.2",
+  "build": 462,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.6.2-emergency-final/SensarTranslate-update.zip.b64.part",
+  "part_count": 9,
+  "sha256": "c475a12df75a4d2ec68938c9e8ceec018520c5ba4c0558905c783c218349f904",
+  "zip_sha256": "84634719ce0db9a4c06ef0cf04b0d60e75f1853c26e22d909c6f60271fbe7505",
   "mandatory": false,
   "released_at": "2026-08-12",
-  "notes": "v4.6.1 NO-AUTH: Login/Register, account UI, Ctrl+Alt+L and license-key validation are fully removed. Sensar starts directly with translation, dictionary and updates available. Legacy account/session/license cache files are cleaned automatically. Keeps draggable UI, EN/UK Brain, dictionary and verified 0-100% auto-update restart."
+  "notes": "v4.6.2 EMERGENCY FIX: replaces the fragile OCR worker with a smaller compatibility core; 4 primary OCR passes with progressive SAFE MODE retries; STA-to-MTA recovery when Windows Runtime aborts; per-pass and per-engine isolation; stronger final Ukrainian Cyrillic/ІЇЄҐ lock; keeps multi-translation, dictionary, draggable UI and verified 0-100% auto-update restart. No accounts, keys or UAC."
 }
