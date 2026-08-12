@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.3.2",
-  "build": 432,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.3.2-no-uac-final17/SensarTranslate-update.zip.b64.part",
-  "part_count": 17,
-  "sha256": "da0874014ebfbeceb34262d50217c14c1209f682c12f96d88bd36f971df43b6f",
-  "zip_sha256": "2045ee226996a2c1dd51868f4a588dcfa1fdc6585058ea52dd6f923b57331c14",
+  "version": "4.5.0",
+  "build": 450,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.5.0-account-key/SensarTranslate-update.zip.b64.part",
+  "part_count": 6,
+  "sha256": "a044f7687ab74b120c1d05eec4f0063db926fa13f1071196c717375f7a1b7304",
+  "zip_sha256": "04fe087a5ad0d361d1f157fc52244c988724b3b74e7b23fe5abfd409947aff10",
   "mandatory": false,
-  "released_at": "2026-08-11",
-  "notes": "v4.3.2 NO-UAC HOTFIX: removes elevated OCR repair/admin prompts, adds non-elevated user-profile and installed Cyrillic OCR fallbacks, self-recovers a missing OCR worker, and keeps the Ukrainian/English language brain, popup fixes, dictionary, and verified 0-100% auto-update restart."
+  "released_at": "2026-08-12",
+  "notes": "v4.5.0 ACCOUNT + KEY: Login/Register/Account UI, Ctrl+Alt+L, PBKDF2-SHA256 password hashing with random salt, HTTPS server-backed license-key hash validation, remembered local session, plus v4.4 multi-translation dictionary and stronger EN/UK OCR/language brain."
 }
