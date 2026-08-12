@@ -47,8 +47,8 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          android --sdk="$ANDROID_SDK_ROOT" sdk install --canary platforms/android-37 build-tools/37.0.0 platform-tools
-          android --sdk="$ANDROID_SDK_ROOT" sdk list --installed
+          android --sdk="$ANDROID_SDK_ROOT" sdk install --canary platforms/android-37.0 build-tools/37.0.0 platform-tools
+          android --sdk="$ANDROID_SDK_ROOT" sdk list --canary 'platforms/*' || true
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
