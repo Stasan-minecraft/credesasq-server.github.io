@@ -55,7 +55,7 @@ jobs:
         with:
           gradle-version: '9.5.0'
 
-      - name: Restore project
+      - name: Restore and patch project
         shell: bash
         run: |
           set -euxo pipefail
@@ -63,6 +63,7 @@ jobs:
           echo '4a3824f61389aae774b7fbb680feb59b4d3e847dc06e0d87707d430775a54dc0  /tmp/sensar-android.tar.gz' | sha256sum -c -
           tar -xzf /tmp/sensar-android.tar.gz
           sed -i "s/version '8.10.1'/version '9.3.0'/" SensarTranslate-Android-v0.1.0/build.gradle
+          sed -i 's/import android.graphics.HardwareBuffer;/import android.hardware.HardwareBuffer;/' SensarTranslate-Android-v0.1.0/app/src/main/java/com/sensar/translate/SensarAccessibilityService.java
 
       - name: Download official OCR models
         shell: bash
