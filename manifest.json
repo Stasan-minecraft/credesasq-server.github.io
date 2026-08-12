@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.5.0",
-  "build": 450,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.5.0-account-key/SensarTranslate-update.zip.b64.part",
-  "part_count": 6,
-  "sha256": "a044f7687ab74b120c1d05eec4f0063db926fa13f1071196c717375f7a1b7304",
-  "zip_sha256": "04fe087a5ad0d361d1f157fc52244c988724b3b74e7b23fe5abfd409947aff10",
+  "version": "4.6.1",
+  "build": 461,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.6.1-no-auth/SensarTranslate-update.zip.b64.part",
+  "part_count": 7,
+  "sha256": "896493a1ce07bb2cf9fa069a4b53ee4eb582831f28fd6b5faff099c80678d265",
+  "zip_sha256": "7a5f6c457e791a7bbe4d70906d8814434004efb44eb7664858cdde0c1f6ec21b",
   "mandatory": false,
   "released_at": "2026-08-12",
-  "notes": "v4.5.0 ACCOUNT + KEY: Login/Register/Account UI, Ctrl+Alt+L, PBKDF2-SHA256 password hashing with random salt, HTTPS server-backed license-key hash validation, remembered local session, plus v4.4 multi-translation dictionary and stronger EN/UK OCR/language brain."
+  "notes": "v4.6.1 NO-AUTH: Login/Register, account UI, Ctrl+Alt+L and license-key validation are fully removed. Sensar starts directly with translation, dictionary and updates available. Legacy account/session/license cache files are cleaned automatically. Keeps draggable UI, EN/UK Brain, dictionary and verified 0-100% auto-update restart."
 }
