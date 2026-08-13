@@ -1,103 +1,93 @@
 name: Build Sensar Android
-
 on:
   push:
     branches: [sensar-android]
-    paths:
-      - 'android-build/project.part*'
-      - '.github/workflows/build-sensar-android.yml'
+    paths: ['.github/workflows/build-sensar-android.yml']
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Install current Android command-line tools
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with: {distribution: temurin, java-version: '17'}
+      - name: Android SDK 37 preview
         shell: bash
         run: |
           set -euxo pipefail
-          export ANDROID_SDK_ROOT="$HOME/android-sdk"
-          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
-          curl -fL --retry 4 --retry-delay 2 \
-            https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip \
-            -o /tmp/cmdline-tools.zip
-          echo '4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  /tmp/cmdline-tools.zip' | sha256sum -c -
-          rm -rf /tmp/android-cli && mkdir -p /tmp/android-cli
-          unzip -q /tmp/cmdline-tools.zip -d /tmp/android-cli
-          mv /tmp/android-cli/cmdline-tools "$ANDROID_SDK_ROOT/cmdline-tools/latest"
-          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
-          echo "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
-          echo "$ANDROID_SDK_ROOT/platform-tools" >> "$GITHUB_PATH"
-
-      - name: Install Android 17 Preview SDK with Android CLI
+          export ANDROID_SDK_ROOT="$HOME/android-sdk"; mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+          curl -fL --retry 4 https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip -o /tmp/cli.zip
+          echo '4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  /tmp/cli.zip' | sha256sum -c -
+          unzip -q /tmp/cli.zip -d /tmp/cli; mv /tmp/cli/cmdline-tools "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"; echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"; echo "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/android" --sdk="$ANDROID_SDK_ROOT" sdk install --canary platforms/android-37.0 build-tools/37.0.0 platform-tools
+      - uses: gradle/actions/setup-gradle@v4
+        with: {gradle-version: '9.5.0'}
+      - name: Restore and patch Touch Flow v0.2.0
         shell: bash
         run: |
           set -euxo pipefail
-          android --sdk="$ANDROID_SDK_ROOT" sdk install --canary platforms/android-37.0 build-tools/37.0.0 platform-tools
-          android --sdk="$ANDROID_SDK_ROOT" sdk list --canary 'platforms/*' || true
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '9.5.0'
-
-      - name: Restore and patch project
-        shell: bash
-        run: |
-          set -euxo pipefail
-          cat android-build/project.part00 android-build/project.part01 android-build/project.part02 android-build/project.part03 android-build/project.part04 | base64 -d > /tmp/sensar-android.tar.gz
-          echo '4a3824f61389aae774b7fbb680feb59b4d3e847dc06e0d87707d430775a54dc0  /tmp/sensar-android.tar.gz' | sha256sum -c -
-          tar -xzf /tmp/sensar-android.tar.gz
-          sed -i "s/version '8.10.1'/version '9.3.0'/" SensarTranslate-Android-v0.1.0/build.gradle
-          sed -i 's/import android.graphics.HardwareBuffer;/import android.hardware.HardwareBuffer;/' SensarTranslate-Android-v0.1.0/app/src/main/java/com/sensar/translate/SensarAccessibilityService.java
+          cat android-build/project.part00 android-build/project.part01 android-build/project.part02 android-build/project.part03 android-build/project.part04 | base64 -d > /tmp/p.tar.gz
+          echo '4a3824f61389aae774b7fbb680feb59b4d3e847dc06e0d87707d430775a54dc0  /tmp/p.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/p.tar.gz
+          P=SensarTranslate-Android-v0.1.0
+          sed -i "s/version '8.10.1'/version '9.3.0'/" "$P/build.gradle"
+          sed -i "s/versionCode 1/versionCode 2/;s/versionName '0.1.0-alpha'/versionName '0.2.0-alpha'/" "$P/app/build.gradle"
+          sed -i 's/import android.graphics.HardwareBuffer;/import android.hardware.HardwareBuffer;/' "$P/app/src/main/java/com/sensar/translate/SensarAccessibilityService.java"
           python - <<'PY'
           from pathlib import Path
-          p=Path('SensarTranslate-Android-v0.1.0/app/src/main/java/com/sensar/translate/SensarAccessibilityService.java')
-          s=p.read_text()
-          old="""    private void showBottom(View v){\n        removeOverlay();overlay=v;overlayLp=new WindowManager.LayoutParams(-1,-2,WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,android.graphics.PixelFormat.TRANSLUCENT);overlayLp.gravity=Gravity.BOTTOM|Gravity.START;overlayLp.x=0;overlayLp.y=dp(12);wm.addView(v,overlayLp);\n    }\n"""
-          new="""    private void showBottom(View v){\n        removeOverlay();\n        int screenW=getResources().getDisplayMetrics().widthPixels;\n        int width=Math.max(dp(280),screenW-dp(24));\n        overlay=v;\n        overlayLp=new WindowManager.LayoutParams(width,-2,WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,android.graphics.PixelFormat.TRANSLUCENT);\n        overlayLp.gravity=Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;overlayLp.x=0;overlayLp.y=dp(12);\n        wm.addView(v,overlayLp);\n    }\n"""
-          old2="""    private void makeDraggable(View handle){\n        final float[] d=new float[4];handle.setOnTouchListener((v,e)->{\n            if(overlayLp==null)return false;\n            if(e.getActionMasked()==MotionEvent.ACTION_DOWN){d[0]=e.getRawX();d[1]=e.getRawY();d[2]=overlayLp.x;d[3]=overlayLp.y;overlayLp.gravity=Gravity.TOP|Gravity.START;return true;}\n            if(e.getActionMasked()==MotionEvent.ACTION_MOVE){overlayLp.x=(int)(d[2]+e.getRawX()-d[0]);overlayLp.y=(int)(d[3]+e.getRawY()-d[1]);try{wm.updateViewLayout(overlay,overlayLp);}catch(Throwable ignored){}return true;}return false;\n        });\n    }\n"""
-          new2="""    private void makeDraggable(View handle){\n        final float[] d=new float[4];\n        handle.setOnTouchListener((v,e)->{\n            if(overlayLp==null||overlay==null)return false;\n            if(e.getActionMasked()==MotionEvent.ACTION_DOWN){\n                int[] loc=new int[2];overlay.getLocationOnScreen(loc);\n                overlayLp.gravity=Gravity.TOP|Gravity.START;overlayLp.x=loc[0];overlayLp.y=loc[1];\n                try{wm.updateViewLayout(overlay,overlayLp);}catch(Throwable ignored){}\n                d[0]=e.getRawX();d[1]=e.getRawY();d[2]=overlayLp.x;d[3]=overlayLp.y;\n                return true;\n            }\n            if(e.getActionMasked()==MotionEvent.ACTION_MOVE){\n                int screenW=getResources().getDisplayMetrics().widthPixels;\n                int screenH=getResources().getDisplayMetrics().heightPixels;\n                int maxX=Math.max(0,screenW-Math.max(1,overlay.getWidth()));\n                int maxY=Math.max(0,screenH-Math.max(1,overlay.getHeight()));\n                overlayLp.x=clamp((int)(d[2]+e.getRawX()-d[0]),0,maxX);\n                overlayLp.y=clamp((int)(d[3]+e.getRawY()-d[1]),0,maxY);\n                try{wm.updateViewLayout(overlay,overlayLp);}catch(Throwable ignored){}\n                return true;\n            }\n            return e.getActionMasked()==MotionEvent.ACTION_UP;\n        });\n    }\n"""
-          if old not in s or old2 not in s: raise SystemExit('drag patch anchors missing')
-          p.write_text(s.replace(old,new).replace(old2,new2))
+          root=Path('SensarTranslate-Android-v0.1.0/app/src/main/java/com/sensar/translate')
+          p=root/'MainActivity.java'; s=p.read_text()
+          s=s.replace('private LinearLayout root;','private boolean openedAccessibility;\n    private LinearLayout root;')
+          old='''    @Override protected void onResume(){\n        super.onResume();\n        boolean ready=getSharedPreferences(PREF,MODE_PRIVATE).getBoolean("configured",false) && isAccessibilityEnabled(this);\n        if(ready && !getIntent().getBooleanExtra("settings",false)){\n            getWindow().getDecorView().postDelayed(() -> { triggerCapture(this); finish(); },180);\n        } else render();\n    }'''
+          new='''    @Override protected void onResume(){super.onResume();boolean a=isAccessibilityEnabled(this);if(openedAccessibility){openedAccessibility=false;if(a)getSharedPreferences(PREF,MODE_PRIVATE).edit().putBoolean("configured",true).apply();render();return;}boolean ready=getSharedPreferences(PREF,MODE_PRIVATE).getBoolean("configured",false)&&a;if(ready&&!getIntent().getBooleanExtra("settings",false))getWindow().getDecorView().postDelayed(()->{triggerCapture(this);finish();},140);else render();}'''
+          if old not in s: raise SystemExit('main anchor')
+          s=s.replace(old,new).replace('ANDROID • ALPHA','ANDROID • v0.2.0')
+          s=s.replace('Button accessBtn=button(access?"Відкрити Accessibility":"Увімкнути Accessibility",false); accessBtn.setOnClickListener(v->startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)));','Button accessBtn=button(access?"Відкрити Accessibility":"Увімкнути Sensar slider",false); accessBtn.setOnClickListener(v->{openedAccessibility=true;startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));});')
+          p.write_text(s)
+
+          p=root/'ui'/'SelectionOverlayView.java'; s=p.read_text()
+          s=s.replace('ВИДІЛИ ТЕКСТ ПАЛЬЦЕМ','SENSAR • PAUSED')
+          s=s.replace('← швидкий swipe вліво — словник','Проведи по тексту для перекладу   •   ← свайп — словник')
+          s=s.replace('c.drawRect(rr,fill);c.drawRect(rr,border);','c.drawRoundRect(rr,Ui.dp(getContext(),8),Ui.dp(getContext(),8),fill);c.drawRoundRect(rr,Ui.dp(getContext(),8),Ui.dp(getContext(),8),border);')
+          p.write_text(s)
+
+          p=root/'SensarAccessibilityService.java'; s=p.read_text()
+          s=s.replace('else if(ACTION_DICTIONARY.equals(i.getAction())) showDictionary();','else if(ACTION_DICTIONARY.equals(i.getAction())) showDictionary(false);')
+          conn='@Override protected void onServiceConnected(){super.onServiceConnected();IntentFilter f=new IntentFilter();f.addAction(ACTION_CAPTURE);f.addAction(ACTION_DICTIONARY);if(Build.VERSION.SDK_INT>=33)registerReceiver(commands,f,Context.RECEIVER_NOT_EXPORTED);else registerReceiver(commands,f);}'
+          s=s.replace(conn,conn[:-1]+'main.postDelayed(this::showReadyOverlay,450);}')
+          s=s.replace('@Override public void onDictionarySwipe(){showDictionary();}','@Override public void onDictionarySwipe(){showDictionary(true);}')
+          s=s.replace('again.setOnClickListener(v->startCapture());dict.setOnClickListener(v->showDictionary());close.setOnClickListener(v->removeOverlay());','again.setOnClickListener(v->startCapture());dict.setOnClickListener(v->showDictionary(false));close.setOnClickListener(v->removeOverlay());')
+          s=s.replace('TextView logo=Ui.text(this,"SENSAR TRANSLATE",16,Ui.TEXT,true);header.addView(logo,new LinearLayout.LayoutParams(0,-2,1));','TextView logo=Ui.text(this,"SENSAR TRANSLATE",16,Ui.TEXT,true);header.addView(logo,new LinearLayout.LayoutParams(0,-2,1));TextView ver=Ui.text(this,"v0.2.0",10,Ui.PURPLE,true);header.addView(ver);')
+          a=s.index('    public void showDictionary(){'); b=s.index('    private void renderDictionaryList',a)
+          d='''    public void showDictionary(){showDictionary(false);}\n    public void showDictionary(boolean resume){removeOverlay();LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setPadding(dp(18),dp(18),dp(18),dp(18));root.setBackgroundColor(0xF209080D);LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);root.addView(header,new LinearLayout.LayoutParams(-1,dp(52)));TextView title=Ui.text(this,"SENSAR DICTIONARY",20,Ui.TEXT,true);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));Button close=smallButton(resume?"← Назад":"Закрити",false);header.addView(close,new LinearLayout.LayoutParams(dp(112),-2));close.setOnClickListener(v->{if(resume&&screenshot!=null)showSelection();else removeOverlay();});TextView sub=Ui.text(this,resume?"Frozen-кадр збережено. Повернись і продовжуй виділення.":"Твої збережені переклади.",13,Ui.MUTED,false);root.addView(sub);Ui.margins(sub,0,dp(4),0,dp(12));ScrollView sc=new ScrollView(this);LinearLayout list=new LinearLayout(this);list.setOrientation(LinearLayout.VERTICAL);sc.addView(list,new ScrollView.LayoutParams(-1,-2));root.addView(sc,new LinearLayout.LayoutParams(-1,0,1));renderDictionaryList(list);Button capture=smallButton(resume?"← До виділення":"+ Нове виділення",true);root.addView(capture,new LinearLayout.LayoutParams(-1,-2));Ui.margins(capture,0,dp(10),0,0);capture.setOnClickListener(v->{if(resume&&screenshot!=null)showSelection();else startCapture();});showFull(root,false);}\n\n'''
+          s=s[:a]+d+s[b:]
+          s=s.replace('showDictionary();});','showDictionary(false);});')
+          ready='''    private void showReadyOverlay(){try{if(overlay!=null)return;LinearLayout box=new LinearLayout(this);box.setOrientation(LinearLayout.VERTICAL);box.setPadding(dp(20),dp(16),dp(20),dp(18));box.setBackground(Ui.roundedStroke(Ui.PANEL,24,Ui.LINE,1,this));LinearLayout h=new LinearLayout(this);h.setGravity(Gravity.CENTER_VERTICAL);box.addView(h,new LinearLayout.LayoutParams(-1,dp(40)));TextView t=Ui.text(this,"SENSAR ACTIVE",16,Ui.TEXT,true);h.addView(t,new LinearLayout.LayoutParams(0,-2,1));h.addView(Ui.text(this,"READY",11,Ui.GREEN,true));TextView b=Ui.text(this,"Подвійне натискання бокової кнопки → PAUSED → виділи текст. Свайп вліво → словник.",13,Ui.MUTED,false);box.addView(b);Ui.margins(b,0,dp(7),0,0);LinearLayout r=new LinearLayout(this);box.addView(r);Ui.margins(r,0,dp(13),0,0);Button now=smallButton("Виділити зараз",true),x=smallButton("Закрити",false);r.addView(now,new LinearLayout.LayoutParams(0,-2,1));r.addView(x,new LinearLayout.LayoutParams(0,-2,1));Ui.margins(x,dp(8),0,0,0);now.setOnClickListener(v->startCapture());x.setOnClickListener(v->removeOverlay());showBottom(box);}catch(Throwable ignored){}}\n\n'''
+          s=s.replace('    private void showLoading(String s){',ready+'    private void showLoading(String s){')
+          a=s.index('    private void showBottom(View v){'); b=s.index('    private void removeOverlay()',a)
+          s=s[:a]+'    private void showBottom(View v){removeOverlay();int w=Math.max(dp(280),getResources().getDisplayMetrics().widthPixels-dp(24));overlay=v;overlayLp=new WindowManager.LayoutParams(w,-2,WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,android.graphics.PixelFormat.TRANSLUCENT);overlayLp.gravity=Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;overlayLp.y=dp(12);wm.addView(v,overlayLp);}\n'+s[b:]
+          a=s.index('    private void makeDraggable(View handle){'); b=s.index('    private Button smallButton',a)
+          s=s[:a]+'    private void makeDraggable(View h){final float[] d=new float[4];h.setOnTouchListener((v,e)->{if(overlayLp==null||overlay==null)return false;if(e.getActionMasked()==MotionEvent.ACTION_DOWN){int[] p=new int[2];overlay.getLocationOnScreen(p);overlayLp.gravity=Gravity.TOP|Gravity.START;overlayLp.x=p[0];overlayLp.y=p[1];d[0]=e.getRawX();d[1]=e.getRawY();d[2]=p[0];d[3]=p[1];return true;}if(e.getActionMasked()==MotionEvent.ACTION_MOVE){overlayLp.x=(int)(d[2]+e.getRawX()-d[0]);overlayLp.y=(int)(d[3]+e.getRawY()-d[1]);try{wm.updateViewLayout(overlay,overlayLp);}catch(Throwable ignored){}return true;}return e.getActionMasked()==MotionEvent.ACTION_UP;});}\n\n'+s[b:]
+          p.write_text(s)
           PY
-
-      - name: Download official OCR models
-        shell: bash
+      - name: OCR models
         run: |
-          set -euxo pipefail
-          mkdir -p SensarTranslate-Android-v0.1.0/app/src/main/assets/tessdata
-          curl -fL --retry 4 --retry-delay 2 https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main/eng.traineddata -o SensarTranslate-Android-v0.1.0/app/src/main/assets/tessdata/eng.traineddata
-          curl -fL --retry 4 --retry-delay 2 https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main/ukr.traineddata -o SensarTranslate-Android-v0.1.0/app/src/main/assets/tessdata/ukr.traineddata
-
-      - name: Build debug APK
-        shell: bash
+          D=SensarTranslate-Android-v0.1.0/app/src/main/assets/tessdata; mkdir -p "$D"
+          curl -fL --retry 4 https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main/eng.traineddata -o "$D/eng.traineddata"
+          curl -fL --retry 4 https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main/ukr.traineddata -o "$D/ukr.traineddata"
+      - name: Build APK
         run: |
-          set -euxo pipefail
           cd SensarTranslate-Android-v0.1.0
           gradle :app:assembleDebug --stacktrace --no-daemon
-          cp app/build/outputs/apk/debug/app-debug.apk ../SensarTranslate-Android-v0.1.0-alpha.apk
-          cd ..
-          sha256sum SensarTranslate-Android-v0.1.0-alpha.apk
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+          cp app/build/outputs/apk/debug/app-debug.apk ../SensarTranslate-Android-v0.2.0-alpha.apk
+          cd ..; sha256sum SensarTranslate-Android-v0.2.0-alpha.apk
+      - uses: actions/upload-artifact@v4
         with:
-          name: SensarTranslate-Android-v0.1.0-alpha
-          path: SensarTranslate-Android-v0.1.0-alpha.apk
+          name: SensarTranslate-Android-v0.2.0-alpha
+          path: SensarTranslate-Android-v0.2.0-alpha.apk
           if-no-files-found: error
           retention-days: 30
