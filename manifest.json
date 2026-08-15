@@ -1,13 +1,13 @@
 {
   "app": "Sensar Translate",
   "channel": "stable",
-  "version": "4.6.2",
-  "build": 462,
-  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.6.2-emergency-final/SensarTranslate-update.zip.b64.part",
-  "part_count": 9,
-  "sha256": "c475a12df75a4d2ec68938c9e8ceec018520c5ba4c0558905c783c218349f904",
-  "zip_sha256": "84634719ce0db9a4c06ef0cf04b0d60e75f1853c26e22d909c6f60271fbe7505",
+  "version": "4.6.3",
+  "build": 463,
+  "download_base": "https://raw.githubusercontent.com/Stasan-minecraft/credesasq-server.github.io/sensar-updates/payload/v4.6.3-update-loop-final/SensarTranslate-update.zip.b64.part",
+  "part_count": 8,
+  "sha256": "62e16b13217360e666a0857845a8b09beb17611de232a66cfd707751e665727d",
+  "zip_sha256": "c8565c09ae9ac22491e5271394b2679171afa859227617771d9708decd1a646e",
   "mandatory": false,
-  "released_at": "2026-08-12",
-  "notes": "v4.6.2 EMERGENCY FIX: replaces the fragile OCR worker with a smaller compatibility core; 4 primary OCR passes with progressive SAFE MODE retries; STA-to-MTA recovery when Windows Runtime aborts; per-pass and per-engine isolation; stronger final Ukrainian Cyrillic/ІЇЄҐ lock; keeps multi-translation, dictionary, draggable UI and verified 0-100% auto-update restart. No accounts, keys or UAC."
+  "released_at": "2026-08-15",
+  "notes": "v4.6.3 UPDATE LOOP HOTFIX: fixes the v4.6.2 updater reporting itself as 4.6.1; central APP_VERSION source of truth; second same-version anti-loop guard; fresh v463 updater temp namespace; keeps OCR, EN/UK Language Brain, multi-translation, dictionary, draggable UI, verified 0-100% update and automatic restart. No accounts, keys or UAC."
 }
